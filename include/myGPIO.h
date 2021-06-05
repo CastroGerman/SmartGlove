@@ -5,8 +5,8 @@
 #include <driver/adc.h>
 #include <esp_adc_cal.h>
 
-#define DEFAULT_VREF    1100        //[mV]. Use adc2_vref_to_gpio() to obtain a better estimate
-#define NUM_OF_SAMPLES   64          //Multisampling
+#define DEFAULT_VREF    1100        //[mV]. Use adc2_vref_to_gpio() to obtain a better estimate.
+#define NUM_OF_SAMPLES   64         //Multisampling.
 #define ADC_CAL_MAX     (int)4100   //To be defined in the calibration process into a struct.
 #define ADC_CAL_MIN     (int)2600
 #define FB_LED_PIN      GPIO_NUM_2
@@ -39,9 +39,18 @@
 #define LITTLE_FLEX_CHANNEL ADC1_CHANNEL_5
 #define BATT_CHANNEL        ADC1_CHANNEL_0
 
-#define THUMB_FLEX_CHANNEL_ATT  ADC_ATTEN_DB_6//ADC_ATTEN_DB_0
-#define INDEX_FLEX_CHANNEL_ATT  ADC_ATTEN_DB_6//ADC_ATTEN_DB_2_5
-#define MIDDLE_FLEX_CHANNEL_ATT ADC_ATTEN_DB_6//ADC_ATTEN_DB_11
+/** Due to ADC characteristics, most accurate results are obtained within the following approximate voltage ranges:
+ * 
+ * - 0dB attenuaton (ADC_ATTEN_DB_0) between 100 and 950mV
+ * - 2.5dB attenuation (ADC_ATTEN_DB_2_5) between 100 and 1250mV
+ * - 6dB attenuation (ADC_ATTEN_DB_6) between 150 to 1750mV
+ * - 11dB attenuation (ADC_ATTEN_DB_11) between 150 to 2450mV
+ * 
+ * For maximum accuracy, use the ADC calibration APIs and measure voltages within these recommended ranges.
+ */
+#define THUMB_FLEX_CHANNEL_ATT  ADC_ATTEN_DB_6
+#define INDEX_FLEX_CHANNEL_ATT  ADC_ATTEN_DB_6
+#define MIDDLE_FLEX_CHANNEL_ATT ADC_ATTEN_DB_6
 #define RING_FLEX_CHANNEL_ATT   ADC_ATTEN_DB_6
 #define LITTLE_FLEX_CHANNEL_ATT ADC_ATTEN_DB_6
 #define BATT_CHANNEL_ATT        ADC_ATTEN_DB_6

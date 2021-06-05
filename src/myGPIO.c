@@ -64,16 +64,6 @@ void InitADC1 (void)
     //Check if Two Point or Vref are burned into eFuse
     check_efuse();
 
-    /**Configure ADC
-     * Due to ADC characteristics, most accurate results are obtained within the following approximate voltage ranges:
-     * 
-     * - 0dB attenuaton (ADC_ATTEN_DB_0) between 100 and 950mV
-     * - 2.5dB attenuation (ADC_ATTEN_DB_2_5) between 100 and 1250mV
-     * - 6dB attenuation (ADC_ATTEN_DB_6) between 150 to 1750mV
-     * - 11dB attenuation (ADC_ATTEN_DB_11) between 150 to 2450mV
-     * 
-     * For maximum accuracy, use the ADC calibration APIs and measure voltages within these recommended ranges.
-     */
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(THUMB_FLEX_CHANNEL, THUMB_FLEX_CHANNEL_ATT);
     adc1_config_channel_atten(INDEX_FLEX_CHANNEL, INDEX_FLEX_CHANNEL_ATT);
@@ -97,12 +87,12 @@ void InitGPIO (void)
     io_config.intr_type = GPIO_PIN_INTR_DISABLE;
     //set as input/output mode
     io_config.mode = GPIO_MODE_INPUT_OUTPUT;
-    //bit mask of the pins that you want to set
+    //bit mask of the pins you want to set
     io_config.pin_bit_mask = GPIO_SEL_27;
     //disable pull-down mode
     io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
     //disable pull-up mode
-    io_config.pull_up_en = GPIO_PULLUP_DISABLE;
+    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
     //configure GPIO with the given settings
     gpio_config(&io_config);
 
@@ -120,13 +110,52 @@ void InitGPIO (void)
     io_config.pull_up_en = GPIO_PULLUP_ENABLE;
     gpio_config(&io_config);
 
-
     //Setting LED on board
     io_config.intr_type = GPIO_PIN_INTR_DISABLE;
     io_config.mode = GPIO_MODE_INPUT_OUTPUT;
     io_config.pin_bit_mask = GPIO_SEL_2;
     io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
     io_config.pull_up_en = GPIO_PULLUP_ENABLE;
+    gpio_config(&io_config);
+
+    //Setting input pins near critial ones, just in case.
+    //Pins are: 21, 22, 26, 28, 29, 31
+    //GPIOs are: 7, 8, 4, 17, 5, 19  respectively.
+    io_config.intr_type = GPIO_INTR_DISABLE;
+    io_config.pin_bit_mask = GPIO_SEL_7;
+    io_config.mode = GPIO_MODE_INPUT;
+    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
+    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    gpio_config(&io_config);
+    io_config.intr_type = GPIO_INTR_DISABLE;
+    io_config.pin_bit_mask = GPIO_SEL_8;
+    io_config.mode = GPIO_MODE_INPUT;
+    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
+    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    gpio_config(&io_config);
+    io_config.intr_type = GPIO_INTR_DISABLE;
+    io_config.pin_bit_mask = GPIO_SEL_4;
+    io_config.mode = GPIO_MODE_INPUT;
+    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
+    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    gpio_config(&io_config);
+    io_config.intr_type = GPIO_INTR_DISABLE;
+    io_config.pin_bit_mask = GPIO_SEL_17;
+    io_config.mode = GPIO_MODE_INPUT;
+    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
+    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    gpio_config(&io_config);
+    io_config.intr_type = GPIO_INTR_DISABLE;
+    io_config.pin_bit_mask = GPIO_SEL_5;
+    io_config.mode = GPIO_MODE_INPUT;
+    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
+    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    gpio_config(&io_config);
+    io_config.intr_type = GPIO_INTR_DISABLE;
+    io_config.pin_bit_mask = GPIO_SEL_19;
+    io_config.mode = GPIO_MODE_INPUT;
+    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
+    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
     gpio_config(&io_config);
 
     //Setting glove button
@@ -139,7 +168,7 @@ void InitGPIO (void)
     //change gpio intrrupt type for one pin
     //gpio_set_intr_type(GPIO_SEL_25, GPIO_INTR_ANYEDGE);
     //install gpio isr service
-    gpio_install_isr_service(ESP_INTR_FLAG_LOWMED);//ESP_INTR_FLAG_EDGE);
+    gpio_install_isr_service(ESP_INTR_FLAG_LOWMED);
     //hook isr handler for specific gpio pin
     gpio_isr_handler_add(BUTTON_PIN, glove_button_isr_handler, (void*) NULL);
 }
