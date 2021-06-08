@@ -118,46 +118,6 @@ void InitGPIO (void)
     io_config.pull_up_en = GPIO_PULLUP_ENABLE;
     gpio_config(&io_config);
 
-    //Setting input pins near critial ones, just in case.
-    //Pins are: 21, 22, 26, 28, 29, 31
-    //GPIOs are: 7, 8, 4, 17, 5, 19  respectively.
-    io_config.intr_type = GPIO_INTR_DISABLE;
-    io_config.pin_bit_mask = GPIO_SEL_7;
-    io_config.mode = GPIO_MODE_INPUT;
-    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
-    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    gpio_config(&io_config);
-    io_config.intr_type = GPIO_INTR_DISABLE;
-    io_config.pin_bit_mask = GPIO_SEL_8;
-    io_config.mode = GPIO_MODE_INPUT;
-    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
-    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    gpio_config(&io_config);
-    io_config.intr_type = GPIO_INTR_DISABLE;
-    io_config.pin_bit_mask = GPIO_SEL_4;
-    io_config.mode = GPIO_MODE_INPUT;
-    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
-    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    gpio_config(&io_config);
-    io_config.intr_type = GPIO_INTR_DISABLE;
-    io_config.pin_bit_mask = GPIO_SEL_17;
-    io_config.mode = GPIO_MODE_INPUT;
-    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
-    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    gpio_config(&io_config);
-    io_config.intr_type = GPIO_INTR_DISABLE;
-    io_config.pin_bit_mask = GPIO_SEL_5;
-    io_config.mode = GPIO_MODE_INPUT;
-    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
-    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    gpio_config(&io_config);
-    io_config.intr_type = GPIO_INTR_DISABLE;
-    io_config.pin_bit_mask = GPIO_SEL_19;
-    io_config.mode = GPIO_MODE_INPUT;
-    io_config.pull_up_en = GPIO_PULLUP_ENABLE;
-    io_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    gpio_config(&io_config);
-
     //Setting glove button
     io_config.intr_type = GPIO_PIN_INTR_POSEDGE;
     io_config.pin_bit_mask = GPIO_SEL_25;
